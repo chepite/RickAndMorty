@@ -1,12 +1,18 @@
 const $canvas= document.querySelector(".canvas");
 const ctx= $canvas.getContext('2d');
 
-const characters = [];
+let characters = [];
 // different endpoints: /character,/location, /episode
-const apiUrl= "https://rickandmortyapi.com/api";
+const apiUrl= "https://rickandmortyapi.com/api/";
 //fetch data
-const fetchData = (category)=>{
-    
+const fetchData = async (category)=>{
+    const response = await fetch(apiUrl+category);
+    const data = await response.json();
+    //depending on request assing variables
+    if(category === "character"){
+        characters = data;
+    }
+    console.log(characters);
 }
 //handle mouse movement/clicks
 //draw the characters
