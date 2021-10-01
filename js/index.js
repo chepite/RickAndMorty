@@ -1,4 +1,5 @@
 import Character from './classes/Character.js'
+import { loadImage } from './functions/lib.js';
 const $canvas = document.querySelector(".canvas");
 const ctx = $canvas.getContext("2d");
 
@@ -12,16 +13,19 @@ const fetchData = async (category) => {
     for (let i = 1; i <= 34; i++) {
       const response = await fetch(`${apiUrl}${category}?page=${i}`);
       const data = await response.json();
-      data.results.forEach((element) => {
+      await data.results.forEach((element) => {
         characterdata.push(element);
       });
-      console.log(characterdata);
     }
 
   }
 };
 //handle mouse movement/clicks
 //draw the characters
+const drawImages = ()=>{
+  //ctx.clearRect(0,0, $canvas.width, $canvas.height);
+  characters.forEach(character=> character.draw(ctx));
+}
 
 const reportWindowSize = () => {
   $canvas.height = window.innerHeight;
@@ -30,14 +34,17 @@ const reportWindowSize = () => {
 
 //size of the character is gonna be the amount of episodes they appear in
 const init = async() => {
+  $canvas.width= window.innerWidth;
+  $canvas.height= window.innerHeight;
   //resize canvas according to window
   window.addEventListener("resize", reportWindowSize);
   await fetchData("character");
   characterdata.forEach(x=> {
-    characters.push(new Character(x.id, x.name,x.image,x.episode))
+     characters.push(new Character(x.id, x.name,x.image,x.episode))
   });
   console.log("--------------");
   console.log(characters);
+  await drawImages();
   
 };
 init();
