@@ -12,10 +12,11 @@ class Character{
     draw (ctx){
         //test
         const x = this.location.x;
-        const y = this.location.y
-        let testImage = new Image;
+        const y = this.location.y;
+        const dimension= this.size*10;
+        let testImage = new Image();
         testImage.onload = function(){
-            ctx.drawImage(testImage,x,y)
+            ctx.drawImage(testImage,x,y, dimension,dimension)
         }
         testImage.src = this.image
     }
