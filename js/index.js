@@ -1,11 +1,9 @@
 import Character from './classes/Character.js'
-import { loadImage } from './functions/lib.js';
 const $canvas = document.querySelector(".canvas");
 const ctx = $canvas.getContext("2d");
 
 let characterdata = [];
 let characters= [];
-// different endpoints: /character,/location, /episode
 const apiUrl = "https://rickandmortyapi.com/api/";
 //fetch data
 const fetchData = async (category) => {
@@ -20,18 +18,14 @@ const fetchData = async (category) => {
 
   }
 };
-//handle mouse movement/clicks
 //draw the characters
 const drawImages = ()=>{
-  //ctx.clearRect(0,0, $canvas.width, $canvas.height);
   characters.forEach(character=> character.draw(ctx));
 }
-
 const reportWindowSize = () => {
   $canvas.height = window.innerHeight;
   $canvas.width = window.innerWidth;
 };
-
 //size of the character is gonna be the amount of episodes they appear in
 const init = async() => {
   $canvas.width= window.innerWidth;
@@ -44,7 +38,8 @@ const init = async() => {
   });
   console.log("--------------");
   console.log(characters);
-  await drawImages();
+  drawImages();
+  console.log("done drawing")
   
 };
 init();
